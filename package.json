@@ -11,12 +11,6 @@
     "format:check": "prettier --check --ignore-path .gitignore .",
     "format:fix": "prettier --write --ignore-path .gitignore ."
   },
-  "lint-staged": {
-    "src/**/*.{ts,tsx,js,jsx}": [
-      "npm run lint",
-      "npm run format:fix"
-    ]
-  },
   "dependencies": {
     "@clerk/nextjs": "^5.1.6",
     "@hookform/resolvers": "^3.6.0",

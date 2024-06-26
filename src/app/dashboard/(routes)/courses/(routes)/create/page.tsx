@@ -1,5 +1,6 @@
 "use client"
 
+import axios from "axios"
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -15,6 +16,8 @@ import {
 } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import toast from "react-hot-toast"
+import { useRouter } from "next/navigation"
 
 const formSchema = z.object({
   title: z.string().min(1, { message: "Title is required." }),
@@ -23,6 +26,7 @@ const formSchema = z.object({
 type FormSchemaType = z.infer<typeof formSchema>
 
 const CreateCoursePage = () => {
+  const router = useRouter()
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -30,8 +34,14 @@ const CreateCoursePage = () => {
     },
   })
   const { isSubmitting, isValid } = form.formState
-  const onSubmit = (values: FormSchemaType) => {
-    console.log(values)
+
+  const onSubmit = async (values: FormSchemaType) => {
+    try {
+      const response = await axios.post("/api/courses", values)
+      router.push(`/dashboard/courses/${response.data.id}`)
+    } catch (error) {
+      toast.error("something went wrong!")
+    }
   }
 
   return (

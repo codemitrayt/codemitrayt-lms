@@ -8,6 +8,7 @@ import DescriptionForm from "../_components/description-form"
 import ImageForm from "../_components/image-form"
 import CategoryForm from "../_components/category-form"
 import PriceForm from "../_components/price-form"
+import AttachmentForm from "../_components/attachment-form"
 
 type SingleCoursePage = {
   params: {
@@ -19,24 +20,22 @@ const SingleCoursePage = async ({ params }: SingleCoursePage) => {
     where: {
       id: params.courseId,
     },
+    include: {
+      attachments: {
+        orderBy: {
+          createdAt: "desc",
+        },
+      },
+    },
   })
 
-  const categories = (
-    await db.category.findMany({
-      orderBy: {
-        name: "asc",
-      },
-    })
-  ).map((category) => {
-    return {
-      value: category.id,
-      label: category.name,
-    }
+  const categories = await db.category.findMany({
+    orderBy: {
+      name: "asc",
+    },
   })
 
   if (!course) return redirect("/dashboard/courses")
-
-  console.log(categories)
 
   const courseField = [
     course.title,
@@ -72,7 +71,12 @@ const SingleCoursePage = async ({ params }: SingleCoursePage) => {
             <CategoryForm
               initialData={course}
               courseId={params.courseId}
-              options={categories}
+              options={categories.map((category) => {
+                return {
+                  value: category.id,
+                  label: category.name,
+                }
+              })}
             />
           </div>
           <div className="flex flex-col gap-6">
@@ -90,6 +94,10 @@ const SingleCoursePage = async ({ params }: SingleCoursePage) => {
               </div>
               <div>
                 <PriceForm initialData={course} courseId={params.courseId} />
+                <AttachmentForm
+                  initialData={course}
+                  courseId={params.courseId}
+                />
               </div>
             </div>
           </div>

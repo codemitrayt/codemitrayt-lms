@@ -3,26 +3,14 @@
 import * as z from "zod"
 import axios from "axios"
 import { useState } from "react"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import Image from "next/image"
 import { useRouter } from "next/navigation"
 import toast from "react-hot-toast"
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
 
-import { CirclePlus, ImageIcon, Pencil, X } from "lucide-react"
-import { Textarea } from "@/components/ui/textarea"
-import { cn } from "@/lib/utils"
-import { UploadButton } from "@/lib/uploadthing"
-import Image from "next/image"
 import { FileUpload } from "@/components/ui/file-upload"
+import { CirclePlus, ImageIcon, Pencil, X } from "lucide-react"
 
 interface ImageFormProps {
   initialData: {
@@ -38,15 +26,7 @@ const formSchema = z.object({
 type FormSchemaType = z.infer<typeof formSchema>
 
 const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
-  const form = useForm<FormSchemaType>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      imgUrl: initialData?.imgUrl || "",
-    },
-  })
-
   const router = useRouter()
-  const { isSubmitting, isValid } = form.formState
   const [isEdit, setIsEdit] = useState(false)
   const toggleEditButton = () => setIsEdit((cur) => !cur)
 
@@ -114,7 +94,7 @@ const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
           </div>
         ) : (
           <div className="flex items-center justify-center h-60 rounded-md bg-muted">
-            <ImageIcon className="h-10 w-10 text-sky-500" />
+            <ImageIcon className="size-10 text-sky-500" />
           </div>
         )}
       </div>

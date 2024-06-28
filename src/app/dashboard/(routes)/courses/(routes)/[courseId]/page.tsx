@@ -3,12 +3,13 @@ import { redirect } from "next/navigation"
 
 import IconBadge from "@/components/ui/icon-badge"
 import TitleForm from "../_components/title-form"
-import { IndianRupee, LayoutDashboard, ListChecks } from "lucide-react"
 import DescriptionForm from "../_components/description-form"
 import ImageForm from "../_components/image-form"
 import CategoryForm from "../_components/category-form"
 import PriceForm from "../_components/price-form"
 import AttachmentForm from "../_components/attachment-form"
+import ChapterTitleForm from "../_components/chapter-title-form"
+import { IndianRupee, LayoutDashboard, ListChecks } from "lucide-react"
 
 type SingleCoursePage = {
   params: {
@@ -21,6 +22,11 @@ const SingleCoursePage = async ({ params }: SingleCoursePage) => {
       id: params.courseId,
     },
     include: {
+      chapters: {
+        orderBy: {
+          position: "asc",
+        },
+      },
       attachments: {
         orderBy: {
           createdAt: "desc",
@@ -85,7 +91,12 @@ const SingleCoursePage = async ({ params }: SingleCoursePage) => {
                 <IconBadge icon={ListChecks} />
                 <h1 className="text-lg font-medium">Course chapters</h1>
               </div>
-              <div>TODO: Chapters</div>
+              <div>
+                <ChapterTitleForm
+                  initialData={course}
+                  courseId={params.courseId}
+                />
+              </div>
             </div>
             <div>
               <div className="flex items-center gap-x-2">

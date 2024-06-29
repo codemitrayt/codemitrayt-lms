@@ -54,6 +54,9 @@ model Chapter {
   title       String
   description String? @db.Text
   position    Int
+  isPublished Boolean @default(false)
+  isFree      Boolean @default(false)
+  videoUrl    String?
 
   courseId String
   course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)

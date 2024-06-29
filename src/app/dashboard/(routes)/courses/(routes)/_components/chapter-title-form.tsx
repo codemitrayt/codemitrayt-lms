@@ -21,7 +21,7 @@ import { Pencil, PlusCircle, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Chapter, Course } from "@prisma/client"
 import { Input } from "@/components/ui/input"
-import ChapterItems from "./chapter-items"
+import ChaptersList from "./chapters-list"
 
 interface ChapterTitleFormProps {
   initialData: Course & { chapters: Chapter[] }
@@ -58,8 +58,12 @@ const ChapterTitleForm = ({ initialData, courseId }: ChapterTitleFormProps) => {
     }
   }
 
+  const onReorder = (updatedData: { id: string; position: number }[]) => {
+    console.log(updatedData)
+  }
+
   return (
-    <div className="mt-6 border shadow-sm shadow-gray-100 rounded-md p-4">
+    <div className="mt-6 border shadow-sm rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         <span>Course chapters</span>
         <Button
@@ -118,9 +122,10 @@ const ChapterTitleForm = ({ initialData, courseId }: ChapterTitleFormProps) => {
             )}
           >
             {initialData?.chapters.length ? (
-              <ChapterItems
+              <ChaptersList
                 chapters={initialData.chapters}
                 courseId={courseId}
+                onReorder={onReorder}
               />
             ) : (
               "No chapters"

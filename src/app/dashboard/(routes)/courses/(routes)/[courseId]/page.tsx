@@ -65,7 +65,7 @@ const SingleCoursePage = async ({ params }: SingleCoursePage) => {
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 mt-16 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 mt-8 gap-6">
           <div>
             <div className="flex items-center gap-x-2">
               <IconBadge icon={LayoutDashboard} />

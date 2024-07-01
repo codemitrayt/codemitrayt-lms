@@ -37,7 +37,7 @@ export async function POST(
       },
     })
 
-    const position = lastChapter?.position ? lastChapter.position + 1 : 1
+    const position = lastChapter?.position ? lastChapter.position + 1 : 0
 
     const chapter = await db.chapter.create({
       data: {

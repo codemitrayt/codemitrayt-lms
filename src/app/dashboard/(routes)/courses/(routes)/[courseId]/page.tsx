@@ -8,7 +8,7 @@ import ImageForm from "../_components/image-form"
 import CategoryForm from "../_components/category-form"
 import PriceForm from "../_components/price-form"
 import AttachmentForm from "../_components/attachment-form"
-import ChapterTitleForm from "../_components/chapter-title-form"
+import ChapterForm from "../_components/chapter-form"
 import { IndianRupee, LayoutDashboard, ListChecks } from "lucide-react"
 
 type SingleCoursePage = {
@@ -49,6 +49,7 @@ const SingleCoursePage = async ({ params }: SingleCoursePage) => {
     course.imgUrl,
     course.categoryId,
     course.price,
+    course.chapters.find((chapter) => chapter.isPublished === true),
   ]
 
   const totalFields = courseField.length
@@ -92,10 +93,7 @@ const SingleCoursePage = async ({ params }: SingleCoursePage) => {
                 <h1 className="text-lg font-medium">Course chapters</h1>
               </div>
               <div>
-                <ChapterTitleForm
-                  initialData={course}
-                  courseId={params.courseId}
-                />
+                <ChapterForm initialData={course} courseId={params.courseId} />
               </div>
             </div>
             <div>

@@ -15,13 +15,13 @@ import { Button } from "@/components/ui/button"
 
 type ChpaterItemsProps = {
   chapters: Chapter[]
-  courseId: string
   onReorder: (value: { id: string; position: number }[]) => void
+  onEdit: (vlaue: string) => void
 }
 const ChaptersList = ({
   chapters: items,
-  courseId,
   onReorder,
+  onEdit,
 }: ChpaterItemsProps) => {
   const [chapters, setChapters] = useState(items)
   const [isMounted, setIsMounted] = useState(false)
@@ -86,7 +86,7 @@ const ChaptersList = ({
                       {...provided.dragHandleProps}
                     >
                       <div className="flex items-center justify-center space-x-3">
-                        <button className="flex items-center justify-center hover:bg-muted rounded-tl-md rounded-bl-md p-3 border-r">
+                        <button className="flex items-center justify-center hover:bg-muted rounded-l-md p-3 border-r">
                           <Grip className="size-4" />
                         </button>
                         <span className="text-sm font-medium line-clamp-1 text-foregorund">
@@ -117,6 +117,7 @@ const ChaptersList = ({
                         <Button
                           variant="ghost"
                           className="hover:bg-transparent"
+                          onClick={() => onEdit(chapter.id)}
                         >
                           <Pencil className="size-3 text-green-500 hover:text-green-500/90" />
                         </Button>

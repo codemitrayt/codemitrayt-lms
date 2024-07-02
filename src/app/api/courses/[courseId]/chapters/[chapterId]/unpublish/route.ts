@@ -24,7 +24,7 @@ export async function PATCH(
     })
 
     const publishedChapters = await db.chapter.findMany({
-      where: { courseId },
+      where: { courseId, isPublished: true },
     })
 
     if (!publishedChapters.length) {

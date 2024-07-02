@@ -4,6 +4,7 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import ToastProvider from "@/providers/toast-provider"
 import ThemeProvider from "@/providers/theme-provider"
+import ConfettiProvider from "@/providers/confetti-provider"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -27,6 +28,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <ConfettiProvider />
             <ToastProvider />
             <main className="antialiased">{children}</main>
           </ThemeProvider>

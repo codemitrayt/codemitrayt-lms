@@ -21,6 +21,8 @@ const ChapterActions = ({
 }: ChapterActionsProps) => {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
+  const [isLoadingWhileChangeVisibility, setIsLoadingWhileChangeVisibility] =
+    useState(false)
 
   const onDelete = async () => {
     try {
@@ -36,19 +38,47 @@ const ChapterActions = ({
     }
   }
 
-  const onPublish = async () => {}
+  const handleChapterVisibility = async () => {
+    try {
+      setIsLoadingWhileChangeVisibility(true)
+      if (!isPublished) {
+        await axios.patch(
+          `/api/courses/${courseId}/chapters/${chapterId}/publish`
+        )
+        toast.success("Chpater published successfully.")
+      } else {
+        await axios.patch(
+          `/api/courses/${courseId}/chapters/${chapterId}/unpublish`
+        )
+        toast.success("Chpater unpublished successfully.")
+      }
+      router.refresh()
+    } catch (error) {
+      console.log(error)
+      toast.error("Something went wrong.")
+    } finally {
+      setIsLoadingWhileChangeVisibility(false)
+    }
+  }
   return (
     <div className="flex items-center justify-center space-x-3">
       <Button
-        disabled={disabled || isLoading}
-        onClick={() => {}}
+        disabled={disabled || isLoading || isLoadingWhileChangeVisibility}
+        onClick={handleChapterVisibility}
         variant="outline"
         size="sm"
+        className="space-x-1"
       >
-        {isPublished ? "Unpublish" : "Publish"}
+        {isLoadingWhileChangeVisibility && (
+          <Loader2 className="size-5 animate-spin" />
+        )}
+        <span>{isPublished ? "Unpublish" : "Publish"}</span>
       </Button>
 
-      <button onClick={onDelete}>
+      <button
+        onClick={onDelete}
+        disabled={isLoading || isLoadingWhileChangeVisibility}
+      >
         {isLoading ? (
           <Loader2 className="size-5 animate-spin" />
         ) : (

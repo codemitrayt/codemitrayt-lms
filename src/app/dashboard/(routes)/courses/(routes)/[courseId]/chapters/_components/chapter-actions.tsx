@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import { useConfettiStore } from "@/hooks/use-confetti-store"
 import axios from "axios"
 import { Loader2, Trash2 } from "lucide-react"
 import { useRouter } from "next/navigation"
@@ -20,6 +21,7 @@ const ChapterActions = ({
   chapterId,
 }: ChapterActionsProps) => {
   const router = useRouter()
+  const confetti = useConfettiStore()
   const [isLoading, setIsLoading] = useState(false)
   const [isLoadingWhileChangeVisibility, setIsLoadingWhileChangeVisibility] =
     useState(false)
@@ -46,6 +48,7 @@ const ChapterActions = ({
           `/api/courses/${courseId}/chapters/${chapterId}/publish`
         )
         toast.success("Chpater published successfully.")
+        confetti.onOpen()
       } else {
         await axios.patch(
           `/api/courses/${courseId}/chapters/${chapterId}/unpublish`

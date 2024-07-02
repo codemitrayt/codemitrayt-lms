@@ -10,6 +10,8 @@ import PriceForm from "../_components/price-form"
 import AttachmentForm from "../_components/attachment-form"
 import ChapterForm from "../_components/chapter-form"
 import { IndianRupee, LayoutDashboard, ListChecks } from "lucide-react"
+import CourseActions from "../_components/course-actions"
+import { Banner } from "@/components/ui/banner"
 
 type SingleCoursePage = {
   params: {
@@ -49,70 +51,93 @@ const SingleCoursePage = async ({ params }: SingleCoursePage) => {
     course.imgUrl,
     course.categoryId,
     course.price,
-    course.chapters.find((chapter) => chapter.isPublished === true),
+    course.chapters.some(Boolean),
   ]
 
   const totalFields = courseField.length
   const completedFields = courseField.filter(Boolean).length
   const completionText = `${completedFields}/${totalFields}`
+  const isComplete = courseField.every(Boolean)
 
   return (
-    <div className="p-6">
-      <div className="flex flex-col">
-        <div className="flex flex-col gap-y-2">
-          <h1 className="text-2xl font-medium">Course Setup</h1>
-          <span className="text-sm text-muted-foreground">
-            Completed all fields {completionText}
-          </span>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 mt-8 gap-6">
-          <div>
-            <div className="flex items-center gap-x-2">
-              <IconBadge icon={LayoutDashboard} />
-              <h1 className="text-lg font-medium">Customize your course</h1>
+    <>
+      {!course.isPublished && (
+        <Banner
+          label="This course is unpublished. It will not be visible to students."
+          variant="warning"
+        />
+      )}
+      <div className="p-6">
+        <div className="flex flex-col">
+          <div className="flex items-center justify-between">
+            <div className="flex flex-col gap-y-2">
+              <h1 className="text-2xl font-medium">Course Setup</h1>
+              <span className="text-sm text-muted-foreground">
+                Completed all fields {completionText}
+              </span>
             </div>
-            <TitleForm initialData={course} courseId={params.courseId} />
-            <DescriptionForm initialData={course} courseId={params.courseId} />
-            <ImageForm initialData={course} courseId={params.courseId} />
-            <CategoryForm
-              initialData={course}
+
+            <CourseActions
               courseId={params.courseId}
-              options={categories.map((category) => {
-                return {
-                  value: category.id,
-                  label: category.name,
-                }
-              })}
+              isPublished={course.isPublished}
+              disabled={!isComplete}
             />
           </div>
-          <div className="flex flex-col gap-6">
+
+          <div className="grid grid-cols-1 md:grid-cols-2 mt-8 gap-6">
             <div>
               <div className="flex items-center gap-x-2">
-                <IconBadge icon={ListChecks} />
-                <h1 className="text-lg font-medium">Course chapters</h1>
+                <IconBadge icon={LayoutDashboard} />
+                <h1 className="text-lg font-medium">Customize your course</h1>
               </div>
-              <div>
-                <ChapterForm initialData={course} courseId={params.courseId} />
-              </div>
+              <TitleForm initialData={course} courseId={params.courseId} />
+              <DescriptionForm
+                initialData={course}
+                courseId={params.courseId}
+              />
+              <ImageForm initialData={course} courseId={params.courseId} />
+              <CategoryForm
+                initialData={course}
+                courseId={params.courseId}
+                options={categories.map((category) => {
+                  return {
+                    value: category.id,
+                    label: category.name,
+                  }
+                })}
+              />
             </div>
-            <div>
-              <div className="flex items-center gap-x-2">
-                <IconBadge icon={IndianRupee} />
-                <h1 className="text-lg font-medium">Sell your course</h1>
+            <div className="flex flex-col gap-6">
+              <div>
+                <div className="flex items-center gap-x-2">
+                  <IconBadge icon={ListChecks} />
+                  <h1 className="text-lg font-medium">Course chapters</h1>
+                </div>
+                <div>
+                  <ChapterForm
+                    initialData={course}
+                    courseId={params.courseId}
+                  />
+                </div>
               </div>
               <div>
-                <PriceForm initialData={course} courseId={params.courseId} />
-                <AttachmentForm
-                  initialData={course}
-                  courseId={params.courseId}
-                />
+                <div className="flex items-center gap-x-2">
+                  <IconBadge icon={IndianRupee} />
+                  <h1 className="text-lg font-medium">Sell your course</h1>
+                </div>
+                <div>
+                  <PriceForm initialData={course} courseId={params.courseId} />
+                  <AttachmentForm
+                    initialData={course}
+                    courseId={params.courseId}
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

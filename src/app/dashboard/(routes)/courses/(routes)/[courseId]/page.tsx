@@ -51,7 +51,7 @@ const SingleCoursePage = async ({ params }: SingleCoursePage) => {
     course.imgUrl,
     course.categoryId,
     course.price,
-    course.chapters.some(Boolean),
+    course.chapters.some((chapter) => chapter.isPublished),
   ]
 
   const totalFields = courseField.length

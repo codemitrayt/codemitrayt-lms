@@ -25,7 +25,7 @@ export const columns: ColumnDef<Course & { category: Category | null }>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Title
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="ml-2 size-4" />
         </Button>
       )
     },
@@ -39,7 +39,7 @@ export const columns: ColumnDef<Course & { category: Category | null }>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Price
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="ml-2 size-4" />
         </Button>
       )
     },
@@ -57,7 +57,7 @@ export const columns: ColumnDef<Course & { category: Category | null }>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Published
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="ml-2 size-4" />
         </Button>
       )
     },

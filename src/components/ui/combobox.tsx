@@ -45,7 +45,7 @@ export default function ComboBox({ options, value, onChange }: CompboBoxProps) {
           {value
             ? options.find((option) => option.value === value)?.label
             : "Select option..."}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-full p-0">
@@ -66,7 +66,7 @@ export default function ComboBox({ options, value, onChange }: CompboBoxProps) {
                   {option.label}
                   <Check
                     className={cn(
-                      "ml-auto h-4 w-4",
+                      "ml-auto size-4",
                       value === option.value ? "opacity-100" : "opacity-0"
                     )}
                   />

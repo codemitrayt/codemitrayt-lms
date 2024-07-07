@@ -28,7 +28,7 @@ interface IconBadge extends IconVariance {
 
 const IconBadge = ({ icon: Icon, type, size }: IconBadge) => {
   return (
-    <div className="flex items-center justify-center rounded-full h-8 w-8 bg-sky-50 p-1 shadow-sm shadow-gray-400">
+    <div className="flex items-center justify-center rounded-full size-8 bg-sky-50 p-1 shadow-sm shadow-gray-400">
       <Icon className={cn(iconVariance({ type, size }))} />
     </div>
   )

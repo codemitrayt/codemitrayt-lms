@@ -3,7 +3,7 @@
 import ReactConfetti from "react-confetti"
 import { useConfettiStore } from "@/hooks/use-confetti-store"
 
-export default function () {
+const ConfettiProvider = () => {
   const confetti = useConfettiStore()
   if (!confetti.isOpen) return null
   return (
@@ -17,3 +17,5 @@ export default function () {
     />
   )
 }
+
+export default ConfettiProvider

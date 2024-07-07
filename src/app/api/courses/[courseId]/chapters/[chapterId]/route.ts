@@ -9,7 +9,7 @@ const { video: Video } = new Mux({
 })
 
 export async function PATCH(
-  req: Response,
+  req: Request,
   { params }: { params: { courseId: string; chapterId: string } }
 ) {
   try {

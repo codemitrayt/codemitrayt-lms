@@ -32,7 +32,7 @@ const SearchInput = () => {
     <div className="relative">
       <Search className="size-4 absolute top-3 left-3 text-slate-600" />
       <Input
-        className="w-full md:w-[300px] pl-9 rounded-full bg-slate-100 focus:border-sky-700 focus-visible:ring-0 focus-visible:ring-offset-0"
+        className="w-full md:w-[300px] pl-9 rounded-full dark:text-muted bg-slate-100 focus:border-sky-700 focus-visible:ring-0 focus-visible:ring-offset-0"
         placeholder="Search for a course"
         onChange={debounce(
           (event: React.ChangeEvent<HTMLInputElement>) =>

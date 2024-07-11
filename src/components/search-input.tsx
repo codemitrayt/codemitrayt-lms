@@ -19,7 +19,7 @@ const SearchInput = () => {
       {
         url: pathname,
         query: {
-          categoryId: categoryId ? null : categoryId,
+          categoryId: categoryId ? categoryId : null,
           title: value,
         },
       },
@@ -37,7 +37,7 @@ const SearchInput = () => {
         onChange={debounce(
           (event: React.ChangeEvent<HTMLInputElement>) =>
             onChange(event.target.value),
-          200
+          100
         )}
       />
     </div>

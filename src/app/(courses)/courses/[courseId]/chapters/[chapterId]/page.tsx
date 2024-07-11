@@ -23,10 +23,7 @@ const ChapterIdPage = async ({
     purchase,
   } = await getChapter({ userId, ...params })
 
-  console.log(chapter, course)
-
   if (!course || !chapter) {
-    console.log("redirecting to home")
     return redirect("/")
   }
 

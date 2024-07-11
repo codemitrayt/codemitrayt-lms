@@ -2,8 +2,13 @@ import { Banner } from "@/components/ui/banner"
 import { auth } from "@clerk/nextjs/server"
 import { redirect } from "next/navigation"
 
+import { Separator } from "@/components/ui/separator"
+import Preview from "@/components/preview"
+
 import getChapter from "actions/get-chapter"
 import VideoPlayer from "../_components/video-player"
+import CourseEnrollButton from "../_components/course-enroll-button"
+import { File } from "lucide-react"
 
 const ChapterIdPage = async ({
   params,
@@ -55,6 +60,38 @@ const ChapterIdPage = async ({
             completeOnEnd={completeOnEnd}
           />
         </div>
+        <div>
+          <div className="p-4 flex flex-col md:flex-row items-center justify-between">
+            <h2 className="text-2xl font-semibold mb-2">{chapter.title}</h2>
+            {purchase ? (
+              <div className="">Add Purchase button</div>
+            ) : (
+              <CourseEnrollButton
+                courseId={params.chapterId}
+                price={course.price!}
+              />
+            )}
+          </div>
+        </div>
+
+        <Separator />
+        <Preview value={chapter.description!} />
+        {!!attachments.length && (
+          <>
+            <Separator />
+            {attachments.map((attachment) => (
+              <a
+                key={attachment.id}
+                className="flex items-center p-3 w-full bg-sky-200 border text-sky-700 rounded-md hover:underline"
+                href={attachment.url}
+                target="_"
+              >
+                <File />
+                <p className="line-clamp-1">{attachment.name}</p>
+              </a>
+            ))}
+          </>
+        )}
       </div>
     </div>
   )

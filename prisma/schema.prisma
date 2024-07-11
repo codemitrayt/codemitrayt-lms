@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -83,9 +84,9 @@ model MuxData {
 }
 
 model UserProgress {
-  id         String  @id @default(uuid())
-  userId     String
-  isComplete Boolean @default(false)
+  id          String  @id @default(uuid())
+  userId      String
+  isCompleted Boolean @default(false)
 
   Chapter   Chapter? @relation(fields: [chapterId], references: [id])
   chapterId String?
@@ -107,6 +108,7 @@ model Purchase {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@unique([userId, courseId])
   @@index([courseId])
 }
 
